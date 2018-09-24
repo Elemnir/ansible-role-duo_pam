@@ -1,0 +1,4 @@
+{% for inst in duo_pam_instances %}
+auth    [success=1 default=ignore]  pam_succeed_if.so quiet user notingroup {{ inst.group }}
+auth    required                    pam_duo.so conf={{ inst.filename }}
+{% endfor %}

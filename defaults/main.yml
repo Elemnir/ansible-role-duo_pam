@@ -1,0 +1,8 @@
+---
+
+duo_pam_instances: []
+# - group: duorequired
+#   filename: /etc/duo/pam_duo.conf
+#   ikey: foo
+#   skey: bar
+#   host: baz

@@ -1,0 +1,32 @@
+---
+
+- become: True
+  block:
+    
+  - name: Add the Duo Repo
+    yum_repository:
+      name: duosecurity
+      description: "Duo Security Repository"
+      file: duosecurity
+      baseurl: "http://pkg.duosecurity.com/CentOS/$releasever/$basearch"
+      gpgkey: "https://duo.com/RPM-GPG-KEY-DUO"
+      gpgcheck: yes
+
+  - name: Install Duo Pam Plugin
+    yum:
+      name: duo_unix
+      state: latest
+
+  - name: Write the Duo key files
+    template:
+      src: "pam_duo.conf.j2"
+      dest: "{{ item.filename }}"
+      owner: root
+      mode: 0700
+    loop: "{{ duo_pam_instances }}"
+
+  - name: Render the Duo PAM stack
+    template:
+      src: "duo-auth.j2"
+      dest: "/etc/pam.d/duo-auth"
+       
