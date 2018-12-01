@@ -13,9 +13,9 @@
       gpgcheck: yes
 
   - name: Install Duo Pam Plugin
-    yum:
+    package:
       name: duo_unix
-      state: latest
+      state: present
 
   - name: Write the Duo key files
     template:
